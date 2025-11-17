@@ -7,7 +7,7 @@ from sklearn.preprocessing import LabelEncoder # перероблює текст
 import matplotlib.pyplot as plt # побудова графіків
 
 # 2.робота з ссв файлом
-df = pd.read_csv('data/figures.csv')
+df = pd.read_csv('data/figures_full.csv')
 # print(df.head())
 encoder = LabelEncoder()
 df['label_enc'] = encoder.fit_transform(df['label'])
@@ -17,12 +17,12 @@ X = df[['area', 'perimeter', 'corners']]
 y = df['label_enc']
 
 # 4.створення моделі
-model = keras.Sequential([layers.Dense(8, activation='relu', input_shape=(3, )),
-                          layers.Dense(8, activation='relu'),
-                          layers.Dense(8, activation='softmax')])
+model = keras.Sequential([layers.Dense(16, activation='relu', input_shape=(3, )),
+                          layers.Dense(16, activation='relu'),
+                          layers.Dense(16, activation='softmax')])
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 # 5.навчання
-history = model.fit(X, y, epochs = 200, verbose = 0)
+history = model.fit(X, y, epochs = 300, verbose = 0)
 
 # 6.візуалізація навчання
 plt.plot(history.history['loss'], label = "Втрата")
@@ -34,7 +34,7 @@ plt.legend()
 plt.show()
 
 # 7.тестування
-test = np.array([[18, 16, 0]])
+test = np.array([[48, 42, 6]])
 
 pred = model.predict(test)
 
